@@ -7,49 +7,47 @@ import { prisma } from "../lib/prisma";
 
 export enum userRole {
     admin = "ADMIN",
-    student ="STUDENT",
-    tutor ="TUTOR"
+    student = "STUDENT",
+    tutor = "TUTOR"
 }
 
-const auth = (...roles: any) => {
+const auth = (...roles: string[]) => {
     return async (req: Request, res: Response, next: NextFunction) => {
         try {
-            // token check
-            // verify token 
-            // is decoded user exists
-            //  is user status Active
+            const token = req.headers.authorization?.split(" ")[1];
 
-            const token = req.headers.authorization
             if (!token) {
-                throw new Error("Token not found")
+                throw new Error("Token not found");
             }
-            const decoded = jwt.verify(token, secret) as JwtPayload
+
+            const decoded = jwt.verify(token, secret) as JwtPayload;
+
             const userData = await prisma.user.findUnique({
-                where : {
-                    email: decoded.email
+                where: {
+                    email: decoded.email,
                 },
             });
-            if(!userData){
-                throw new Error ("Unauthorized");
-            }
-            if(userData.status !== "ACTIVE")
-                throw new Error("Unauthorized")
-            if(roles.length && !roles.includes(decoded.role)){
+            console.log("DB User:", userData);
+
+            if (!userData) {
                 throw new Error("Unauthorized");
-            }   
-            req.user = decoded;
-            
+            }
+
+            if (userData.status.toLowerCase() !== "active") {
+                throw new Error("Unauthorized");
+            }
+
+            if (roles.length && !roles.includes(decoded.role)) {
+                throw new Error("Unauthorized");
+            }
+
+            req.user = decoded as JwtPayload;
+
             next();
-
-
-
         } catch (error: any) {
             next(error);
-
-
         }
-    }
-
-}
+    };
+};
 
 export default auth;
