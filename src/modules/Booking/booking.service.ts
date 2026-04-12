@@ -9,10 +9,25 @@ const createBooking = async (payload: any): Promise<Booking> => {
   if (!studentId) {
     throw new Error('Student ID is required from Token!');
   }
+  const bookingDate = new Date(date);
+  const dayName = bookingDate.toLocaleDateString('en-US', { weekday: 'long' }).toUpperCase(); 
+  const isAvailable = await prisma.availability.findFirst({
+    where: {
+      tutorId,
+      day: dayName as any, 
+      startTime: { lte: time },
+      endTime: { gte: time }    
+    }
+  });
+
+  if (!isAvailable) {
+    throw new Error(`Tutor is not available on ${dayName} at ${time}`);
+  }
+
 
   const result = await prisma.booking.create({
     data: {
-      date: new Date(date), 
+      date: bookingDate, 
       time,
       student: { connect: { id: studentId } },
       tutor: { connect: { id: tutorId } },
@@ -20,7 +35,7 @@ const createBooking = async (payload: any): Promise<Booking> => {
         category: { connect: { id: categoryId } }
       })
     },
-   include: { 
+    include: { 
       tutor: {
         select: {
           id: true,
@@ -39,6 +54,7 @@ const createBooking = async (payload: any): Promise<Booking> => {
       } 
     }
   });
+
   return result;
 };
 
