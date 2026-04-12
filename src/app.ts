@@ -3,6 +3,7 @@ import cors from 'cors';
 import router from './routes';
 import { CategoryRoutes } from './modules/Category/category.route';
 import { ReviewRouter } from './modules/Review/review.router';
+import { AvailabilityRouter } from './modules/Availability/avaliability.route';
 
 const app: Application = express();
 
@@ -14,6 +15,7 @@ app.use(cors());
 app.use('/api/v1', router);
 app.use('/api/v1/categories', CategoryRoutes);
 app.use('/api/v1/categories', ReviewRouter);
+app.use('/api/v1/availability', AvailabilityRouter);
 
 
 
