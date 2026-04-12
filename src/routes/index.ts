@@ -4,6 +4,7 @@ import { TutorRoutes } from "../modules/Tutor/tutor.route";
 import { CategoryRoutes } from "../modules/Category/category.route";
 import { BookingRoutes } from "../modules/Booking/booking.route";
 import { ReviewRouter } from "../modules/Review/review.router";
+import { AvailabilityRouter } from "../modules/Availability/avaliability.route";
 
 const router = Router()
 // router.use('/auth',AuthRoutes);
@@ -29,6 +30,11 @@ const routerManager =[
       path :"/reviews",
       route : ReviewRouter,
     },
+    {
+     path :"/availabilities",
+     route : AvailabilityRouter,
+    },
+    
     
 ];
 
