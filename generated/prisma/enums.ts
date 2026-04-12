@@ -18,6 +18,19 @@ export const Role = {
 export type Role = (typeof Role)[keyof typeof Role]
 
 
+export const DayOfWeek = {
+  MONDAY: 'MONDAY',
+  TUESDAY: 'TUESDAY',
+  WEDNESDAY: 'WEDNESDAY',
+  THURSDAY: 'THURSDAY',
+  FRIDAY: 'FRIDAY',
+  SATURDAY: 'SATURDAY',
+  SUNDAY: 'SUNDAY'
+} as const
+
+export type DayOfWeek = (typeof DayOfWeek)[keyof typeof DayOfWeek]
+
+
 export const BookingStatus = {
   CONFIRMED: 'CONFIRMED',
   COMPLETED: 'COMPLETED',

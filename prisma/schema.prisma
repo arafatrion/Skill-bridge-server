@@ -126,9 +126,6 @@ model TutorProfile {
 
   userId String @unique
   user   User   @relation(fields: [userId], references: [id])
-
-  availabilities Availability[]
-
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
@@ -140,17 +137,27 @@ model Category {
   bookings Booking[]
 }
 
+
+enum DayOfWeek {
+  MONDAY
+  TUESDAY
+  WEDNESDAY
+  THURSDAY
+  FRIDAY
+  SATURDAY
+  SUNDAY
+}
+
 model Availability {
-  id        String @id @default(uuid())
+  id        String    @id @default(uuid())
   tutorId   String
-  day       String   // Monday, Tuesday
-  startTime String   // "10:00"
-  endTime   String   // "12:00"
+  day       DayOfWeek 
+  startTime String    // e.g., "10:00 AM"
+  endTime   String    // e.g., "11:00 AM"
 
-  tutor User @relation(fields: [tutorId], references: [id])
-
+  tutor     User      @relation(fields: [tutorId], references: [id])
   @@index([tutorId])
-  tutorProfiles TutorProfile[]
+  @@map("availabilities")
 }
 
 model Booking {
