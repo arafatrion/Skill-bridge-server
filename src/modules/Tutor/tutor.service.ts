@@ -47,15 +47,15 @@ const getAllTutorIntoDB = async ( userId:string) => {
 };
 
 const getSingleTutorIntoDB = async (tutorId: string) => {
-   const result = await prisma.tutorProfile.findMany({
+   const result = await prisma.tutorProfile.findUnique({
     where: { id: tutorId },
-    include: {
-        user: {
-            include: {
-                availabilities: true,
-            },
-        },
-    },
+   include: {
+    user: {
+        include: {
+            availabilities: true,
+        }
+    }
+},
 });
 
     if (!result) {
@@ -86,13 +86,13 @@ const updateTutorProfile = async (userId: string, payload: any) => {
 const updatedTutor = await prisma.tutorProfile.update({
     where: { userId: user.id },
     data: dataToUpdate,
-    include: {
-        user: {
-            include: {
-                availabilities: true, 
-            },
-        },
-    },
+   include: {
+    user: {
+        include: {
+            availabilities: true,
+        }
+    }
+},
 });
 
   return updatedTutor;
