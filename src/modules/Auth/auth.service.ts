@@ -2,7 +2,7 @@ import { prisma } from "../../lib/prisma";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 
-export const secret = "a8F!kL92@xZ#pQ7$wR";
+export const secret = process.env.JWT_SECRET as string;
 
 const createUserIntoDB = async(payload : any)=>{
    const hashPassword = await bcrypt.hash(payload.password, 12);
