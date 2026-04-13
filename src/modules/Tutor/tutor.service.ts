@@ -28,10 +28,13 @@ const getAllTutorIntoDB = async ( userId:string) => {
    
     const result = await prisma.tutorProfile.findMany({
         where: { userId: user.id },
+       include: {
+    user: {
         include: {
-            user: true,           
             availabilities: true,
-        },
+        }
+    }
+},
     });
 
     
@@ -44,13 +47,16 @@ const getAllTutorIntoDB = async ( userId:string) => {
 };
 
 const getSingleTutorIntoDB = async (tutorId: string) => {
-    const result = await prisma.tutorProfile.findUnique({
-       where: { id: tutorId }, 
-        include: {
-            user: true,           
-            availabilities: true,
+   const result = await prisma.tutorProfile.findMany({
+    where: { id: tutorId },
+    include: {
+        user: {
+            include: {
+                availabilities: true,
+            },
         },
-    });
+    },
+});
 
     if (!result) {
         throw new Error("This user's tutor profile could not be found.");
@@ -77,14 +83,17 @@ const updateTutorProfile = async (userId: string, payload: any) => {
   );
 
 
-  const updatedTutor = await prisma.tutorProfile.update({
+const updatedTutor = await prisma.tutorProfile.update({
     where: { userId: user.id },
     data: dataToUpdate,
     include: {
-      user: true,
-      availabilities: true,
+        user: {
+            include: {
+                availabilities: true, 
+            },
+        },
     },
-  });
+});
 
   return updatedTutor;
 };
