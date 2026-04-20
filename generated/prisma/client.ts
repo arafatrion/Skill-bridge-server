@@ -12,6 +12,8 @@
 
 import * as process from 'node:process'
 import * as path from 'node:path'
+import { fileURLToPath } from 'node:url'
+globalThis['__dirname'] = path.dirname(fileURLToPath(import.meta.url))
 
 import * as runtime from "@prisma/client/runtime/client"
 import * as $Enums from "./enums"
@@ -59,6 +61,11 @@ export type Category = Prisma.CategoryModel
  * 
  */
 export type Availability = Prisma.AvailabilityModel
+/**
+ * Model Course
+ * 
+ */
+export type Course = Prisma.CourseModel
 /**
  * Model Booking
  * 

@@ -6,6 +6,7 @@ import { BookingRoutes } from "../modules/Booking/booking.route";
 import { ReviewRouter } from "../modules/Review/review.router";
 import { AvailabilityRouter } from "../modules/Availability/avaliability.route";
 import { AdminRoutes } from "../modules/Admin/admin.routes";
+import { CourseRoutes } from "../modules/Course/course.route";
 
 const router = Router()
 // router.use('/auth',AuthRoutes);
@@ -39,6 +40,10 @@ const routerManager = [
         path: "/availabilities",
         route: AvailabilityRouter,
     },
+    {
+        path: "/course",
+        route: CourseRoutes,
+    }
 
 
 ];
