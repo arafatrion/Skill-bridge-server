@@ -5,40 +5,45 @@ import { CategoryRoutes } from "../modules/Category/category.route";
 import { BookingRoutes } from "../modules/Booking/booking.route";
 import { ReviewRouter } from "../modules/Review/review.router";
 import { AvailabilityRouter } from "../modules/Availability/avaliability.route";
+import { AdminRoutes } from "../modules/Admin/admin.routes";
 
 const router = Router()
 // router.use('/auth',AuthRoutes);
 
-const routerManager =[
+const routerManager = [
     {
-        path : "/auth",
-        route :AuthRoutes,
+        path: "/auth",
+        route: AuthRoutes,
     },
     {
-        path :"/tutor",
-        route :  TutorRoutes,
+        path: '/admin',
+        route: AdminRoutes,
     },
     {
-        path :"/categories",
-        route :  CategoryRoutes,
+        path: "/tutor",
+        route: TutorRoutes,
     },
     {
-        path :"/bookings",
-        route :  BookingRoutes,
+        path: "/categories",
+        route: CategoryRoutes,
     },
     {
-      path :"/reviews",
-      route : ReviewRouter,
+        path: "/bookings",
+        route: BookingRoutes,
     },
     {
-     path :"/availabilities",
-     route : AvailabilityRouter,
+        path: "/reviews",
+        route: ReviewRouter,
     },
-    
-    
+    {
+        path: "/availabilities",
+        route: AvailabilityRouter,
+    },
+
+
 ];
 
 routerManager.forEach((r) => router.use(r.path, r.route));
 
 
-export default router ;
+export default router;
