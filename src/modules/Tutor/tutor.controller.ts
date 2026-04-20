@@ -128,11 +128,26 @@ const updateTutor = async (req: Request, res: Response) => {
   }
 };
 
+const updateProfile = async (req: Request, res: Response) => {
+  
+  const userId = req.user?.userId; 
+  const payload = req.body;
+  const result = await TutorService.updateTutorProfile(userId, payload);
+
+  sendResponse(res, {
+    statusCode: 200,
+    success: true,
+    message: 'Profile updated successfully!',
+    data: result,
+  });
+};
+
 
 
 export const TutorController ={
   createTutor,
   getAllTutor,
   getSingleTutor,
-  updateTutor
+  updateTutor,
+  updateProfile
 };

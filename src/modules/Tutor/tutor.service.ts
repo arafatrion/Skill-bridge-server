@@ -30,6 +30,13 @@ const getAllTutorIntoDB = async (userId: string) => {
     }
     return result;
 };
+const updateProfileInDB = async (userId: string, payload: any) => {
+  const result = await prisma.tutorProfile.update({
+    where: { userId },
+    data: payload
+  });
+  return result;
+};
 
 const getSingleTutorIntoDB = async (tutorId: string) => {
     const result = await prisma.tutorProfile.findUnique({

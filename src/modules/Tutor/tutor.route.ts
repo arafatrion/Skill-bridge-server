@@ -19,4 +19,6 @@ router.get(
 router.get("/:id", TutorController.getSingleTutor);
 
 router.put("/profile", auth(userRole.tutor), TutorController.updateTutor);
+router.patch("/update-profile", auth("tutor"), TutorController.updateProfile);
+
 export const TutorRoutes = router;

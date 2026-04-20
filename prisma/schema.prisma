@@ -8,84 +8,6 @@ datasource db {
   
 }
 
-// model User {
-//   id       String @id @default(uuid())
-//   name     String
-//   email    String @unique
-//   password String
-//   role     Role
-
-//   tutorProfile    TutorProfile?
-//   studentBookings Booking[]     @relation("StudentBookings")
-//   tutorBookings   Booking[]     @relation("TutorBookings")
-//   reviews         Review[]
-
-//   createdAt DateTime @default(now())
-//   updatedAt DateTime @updatedAt
-
-//   @@index([role])
-//   @@map("User")
-// }
-
-// enum Role {
-//   STUDENT
-//   TUTOR
-//   ADMIN
-// }
-
-// model TutorProfile {
-//   id         String  @id @default(uuid())
-//   bio        String?
-//   experience Int?
-//   hourlyRate Float?
-
-//   userId String @unique
-//   user   User   @relation(fields: [userId], references: [id])
-// }
-
-// model Category {
-//   id   String @id @default(uuid())
-//   name String @unique
-// }
-
-// model Booking {
-//   id        String        @id @default(uuid())
-//   studentId String
-//   tutorId   String
-//   date      DateTime
-//   status    BookingStatus @default(CONFIRMED)
-
-//   student User @relation("StudentBookings", fields: [studentId], references: [id])
-//   tutor   User @relation("TutorBookings", fields: [tutorId], references: [id])
-
-//   createdAt DateTime @default(now())
-
-//   @@index([tutorId])
-//   @@index([studentId])
-//   @@index([date])
-//   @@map("Booking")
-// }
-
-// enum BookingStatus {
-//   CONFIRMED
-//   COMPLETED
-//   CANCELLED
-// }
-
-// model Review {
-//   id      String  @id @default(uuid())
-//   rating  Int
-//   comment String?
-
-//   studentId String
-//   tutorId   String
-
-//   // student User @relation(fields: [studentId], references: [id])
-//   tutor   User @relation(fields: [tutorId], references: [id])
-// }
-
-
-
 
 model User {
   id       String @id @default(uuid())
@@ -123,6 +45,7 @@ model TutorProfile {
   subjects    String[] // e.g. ["Math", "English"]
   avgRating   Float    @default(0)
   totalReview Int      @default(0)
+  courses Course[]
 
   userId String @unique
   user   User   @relation(fields: [userId], references: [id])
@@ -158,6 +81,15 @@ model Availability {
   tutor     User      @relation(fields: [tutorId], references: [id])
   @@index([tutorId])
   @@map("availabilities")
+}
+model Course {
+  id          String   @id @default(uuid())
+  title       String
+  description String
+  price       Float
+  tutorId     String
+  tutor       TutorProfile    @relation(fields: [tutorId], references: [id])
+ createdAt   DateTime @default(now())
 }
 
 model Booking {
